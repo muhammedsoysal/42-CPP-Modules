@@ -9,43 +9,38 @@ void PhoneBook::addContact(PhoneBook &phoneBook)
 	std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
 
 	std::cout << "Enter first name: ";
-	std::getline(std::cin, firstName);
-	while (firstName.empty())
+	if (!std::getline(std::cin, firstName) || firstName.empty())
 	{
-		std::cout << "First name cannot be empty. Enter first name: ";
-		std::getline(std::cin, firstName);
+		std::cout << "Invalid input. Contact not added." << std::endl;
+		return;
 	}
 
 	std::cout << "Enter last name: ";
-	std::getline(std::cin, lastName);
-	while (lastName.empty())
+	if (!std::getline(std::cin, lastName) || lastName.empty())
 	{
-		std::cout << "Last name cannot be empty. Enter last name: ";
-		std::getline(std::cin, lastName);
+		std::cout << "Invalid input. Contact not added." << std::endl;
+		return;
 	}
 
 	std::cout << "Enter nickname: ";
-	std::getline(std::cin, nickname);
-	while (nickname.empty())
+	if (!std::getline(std::cin, nickname) || nickname.empty())
 	{
-		std::cout << "Nickname cannot be empty. Enter nickname: ";
-		std::getline(std::cin, nickname);
+		std::cout << "Invalid input. Contact not added." << std::endl;
+		return;
 	}
 
 	std::cout << "Enter phone number: ";
-	std::getline(std::cin, phoneNumber);
-	while (phoneNumber.empty())
+	if (!std::getline(std::cin, phoneNumber) || phoneNumber.empty())
 	{
-		std::cout << "Phone number cannot be empty. Enter phone number: ";
-		std::getline(std::cin, phoneNumber);
+		std::cout << "Invalid input. Contact not added." << std::endl;
+		return;
 	}
 
 	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, darkestSecret);
-	while (darkestSecret.empty())
+	if (!std::getline(std::cin, darkestSecret) || darkestSecret.empty())
 	{
-		std::cout << "Darkest secret cannot be empty. Enter darkest secret: ";
-		std::getline(std::cin, darkestSecret);
+		std::cout << "Invalid input. Contact not added." << std::endl;
+		return;
 	}
 
 	int index = phoneBook.contactCount % 8;
@@ -94,7 +89,11 @@ void PhoneBook::searchContact(int index) const
 
 	std::string input;
 	std::cout << "Enter the index of the contact to display: ";
-	std::getline(std::cin, input);
+	if (!std::getline(std::cin, input))
+	{
+		std::cout << "Invalid input." << std::endl;
+		return;
+	}
 
 	if (input.length() == 1 && input[0] >= '0' && input[0] <= '7')
 	{
@@ -121,14 +120,18 @@ int main()
 	while (1)
 	{
 		std::cout << "Enter a command (ADD, SEARCH, EXIT): ";
-		std::getline(std::cin, command);
+		if (!std::getline(std::cin, command))
+		{
+			std::cout << std::endl;
+			break;
+		}
 		if (command == "ADD" || command == "add")
 			phoneBook.addContact(phoneBook);
 		else if (command == "SEARCH" || command == "search")
 			phoneBook.searchContact(0);
 		else if (command == "EXIT" || command == "exit")
 			break;
-		else
+		else if (!command.empty())
 			std::cout << "Invalid command" << std::endl;
 	}
 	return 0;
