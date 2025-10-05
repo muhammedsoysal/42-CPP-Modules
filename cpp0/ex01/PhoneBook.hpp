@@ -9,6 +9,7 @@ public:
 	PhoneBook();
 	void addContact(PhoneBook &phoneBook);
 	void searchContact(int index) const;
+	std::string getInput(const std::string &prompt) const;
 
 private:
 	Contact contacts[8];

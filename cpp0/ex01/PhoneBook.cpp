@@ -4,40 +4,50 @@
 
 PhoneBook::PhoneBook() : contactCount(0) {}
 
+std::string PhoneBook::getInput(const std::string &prompt) const
+{
+	std::string input;
+	std::cout << prompt;
+	if (!std::getline(std::cin, input))
+	{
+		std::cout << std::endl;
+		return "";
+	}
+	return input;
+}
+
 void PhoneBook::addContact(PhoneBook &phoneBook)
 {
-	std::string firstName, lastName, nickname, phoneNumber, darkestSecret;
-
-	std::cout << "Enter first name: ";
-	if (!std::getline(std::cin, firstName) || firstName.empty())
+	std::string firstName = getInput("Enter first name: ");
+	if (firstName.empty())
 	{
 		std::cout << "Invalid input. Contact not added." << std::endl;
 		return;
 	}
 
-	std::cout << "Enter last name: ";
-	if (!std::getline(std::cin, lastName) || lastName.empty())
+	std::string lastName = getInput("Enter last name: ");
+	if (lastName.empty())
 	{
 		std::cout << "Invalid input. Contact not added." << std::endl;
 		return;
 	}
 
-	std::cout << "Enter nickname: ";
-	if (!std::getline(std::cin, nickname) || nickname.empty())
+	std::string nickname = getInput("Enter nickname: ");
+	if (nickname.empty())
 	{
 		std::cout << "Invalid input. Contact not added." << std::endl;
 		return;
 	}
 
-	std::cout << "Enter phone number: ";
-	if (!std::getline(std::cin, phoneNumber) || phoneNumber.empty())
+	std::string phoneNumber = getInput("Enter phone number: ");
+	if (phoneNumber.empty())
 	{
 		std::cout << "Invalid input. Contact not added." << std::endl;
 		return;
 	}
 
-	std::cout << "Enter darkest secret: ";
-	if (!std::getline(std::cin, darkestSecret) || darkestSecret.empty())
+	std::string darkestSecret = getInput("Enter darkest secret: ");
+	if (darkestSecret.empty())
 	{
 		std::cout << "Invalid input. Contact not added." << std::endl;
 		return;
@@ -87,9 +97,8 @@ void PhoneBook::searchContact(int index) const
 		std::cout << std::setw(10) << std::right << formatField(contacts[i].getNickname()) << std::endl;
 	}
 
-	std::string input;
-	std::cout << "Enter the index of the contact to display: ";
-	if (!std::getline(std::cin, input))
+	std::string input = getInput("Enter the index of the contact to display: ");
+	if (input.empty())
 	{
 		std::cout << "Invalid input." << std::endl;
 		return;
@@ -119,19 +128,16 @@ int main()
 	std::string command;
 	while (1)
 	{
-		std::cout << "Enter a command (ADD, SEARCH, EXIT): ";
-		if (!std::getline(std::cin, command))
-		{
-			std::cout << std::endl;
+		command = phoneBook.getInput("Enter a command (ADD, SEARCH, EXIT): ");
+		if (command.empty())
 			break;
-		}
 		if (command == "ADD" || command == "add")
 			phoneBook.addContact(phoneBook);
 		else if (command == "SEARCH" || command == "search")
 			phoneBook.searchContact(0);
 		else if (command == "EXIT" || command == "exit")
 			break;
-		else if (!command.empty())
+		else
 			std::cout << "Invalid command" << std::endl;
 	}
 	return 0;
